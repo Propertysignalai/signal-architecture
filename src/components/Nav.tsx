@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const links = [
   { href: '/', label: 'Pipeline' },
-  { href: '/philosophy', label: 'Philosophy' },
+  { href: '/philosophy', label: 'Evolution' },
   { href: '/agents', label: 'Agents' },
   { href: '/bias-protection', label: 'Bias Protection' },
   { href: '/data-flow', label: 'Data Flow' },

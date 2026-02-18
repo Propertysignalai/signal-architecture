@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal — Evolution</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #121216;
+    --surface: #1b1c20;
+    --surface-elevated: #232428;
+    --border: rgba(255, 255, 255, 0.06);
+    --text: #e9e9eb;
+    --text-secondary: #8b8d97;
+    --text-tertiary: #62646e;
+    /* Signal's signature blue */
+    --signal-blue: #3A76F0;
+    --signal-blue-dim: rgba(58, 118, 240, 0.10);
+    --signal-blue-glow: rgba(58, 118, 240, 0.25);
+    /* Phase progression within Signal's palette */
+    --phase0: #6b7080;
+    --phase0-dim: rgba(107, 112, 128, 0.10);
+    --phase1: #3A76F0;
+    --phase1-dim: rgba(58, 118, 240, 0.10);
+    --phase2: #6BA2FF;
+    --phase2-dim: rgba(107, 162, 255, 0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Subtle Signal-blue ambient glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -250px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(58,118,240,0.06) 0%, rgba(58,118,240,0.02) 50%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 96px;
+    opacity: 0;
+    animation: fadeUp 1.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+  }
+
+  .header .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--signal-blue);
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-size: clamp(46px, 7vw, 76px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .header h1 span {
+    color: var(--signal-blue);
+  }
+
+  .header .subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.55;
+    letter-spacing: -0.01em;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--phase0), var(--phase1), var(--phase2));
+    opacity: 0.25;
+    border-radius: 1px;
+  }
+
+  /* Phase */
+  .phase {
+    position: relative;
+    padding-left: 72px;
+    padding-bottom: 68px;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .phase.visible { animation: fadeUp 1s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+  .phase:nth-child(1) { animation-delay: 0.3s; }
+  .phase:nth-child(2) { animation-delay: 0.6s; }
+  .phase:nth-child(3) { animation-delay: 0.9s; }
+
+  /* Timeline dot */
+  .phase-dot {
+    position: absolute;
+    left: 14px;
+    top: 6px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phase-dot::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .phase:nth-child(1) .phase-dot { background: var(--phase0-dim); }
+  .phase:nth-child(1) .phase-dot::before { background: var(--phase0); }
+  .phase:nth-child(2) .phase-dot { background: var(--phase1-dim); }
+  .phase:nth-child(2) .phase-dot::before { background: var(--phase1); }
+  .phase:nth-child(3) .phase-dot { background: var(--phase2-dim); }
+  .phase:nth-child(3) .phase-dot::before { background: var(--phase2); }
+
+  .phase-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .phase-version {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .phase:nth-child(1) .phase-version { color: var(--phase0); background: var(--phase0-dim); }
+  .phase:nth-child(2) .phase-version { color: var(--phase1); background: var(--phase1-dim); }
+  .phase:nth-child(3) .phase-version { color: var(--phase2); background: var(--phase2-dim); }
+
+  .phase-date { font-size: 13px; color: var(--text-tertiary); }
+
+  .phase-title {
+    font-size: clamp(26px, 3.5vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+
+  .phase-model {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-bottom: 24px;
+  }
+
+  .phase-model span { font-weight: 600; }
+  .phase:nth-child(1) .phase-model span { color: var(--phase0); }
+  .phase:nth-child(2) .phase-model span { color: var(--phase1); }
+  .phase:nth-child(3) .phase-model span { color: var(--phase2); }
+
+  /* Card */
+  .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .phase-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+  }
+
+  .phase:nth-child(1) .phase-card::before { background: linear-gradient(to right, rgba(107,112,128,0.25), transparent 60%); }
+  .phase:nth-child(2) .phase-card::before { background: linear-gradient(to right, rgba(58,118,240,0.35), transparent 60%); }
+  .phase:nth-child(3) .phase-card::before { background: linear-gradient(to right, rgba(107,162,255,0.35), transparent 60%); }
+
+  /* Viz */
+  .network-viz {
+    height: 200px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.3);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .network-viz canvas { width: 100%; height: 100%; }
+
+  /* Stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .stat {
+    padding: 14px;
+    background: var(--surface-elevated);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.03);
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .phase:nth-child(1) .stat-label { color: var(--phase0); }
+  .phase:nth-child(2) .stat-label { color: var(--phase1); }
+  .phase:nth-child(3) .stat-label { color: var(--phase2); }
+
+  .phase-desc {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    letter-spacing: -0.005em;
+  }
+
+  .phase-desc strong { color: var(--text); font-weight: 600; }
+
+  /* Comparison */
+  .comparison-section {
+    margin-top: 96px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .comparison-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .comp-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 56px;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .comp-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: right;
+  }
+
+  .comp-track {
+    height: 34px;
+    background: var(--surface-elevated);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .comp-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    border-radius: 8px;
+    transition: width 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0;
+  }
+
+  .comp-bar.bar-0 { background: var(--phase0); z-index: 3; }
+  .comp-bar.bar-1 { background: var(--phase1); z-index: 2; opacity: 0.85; }
+  .comp-bar.bar-2 { background: var(--phase2); z-index: 1; opacity: 0.8; }
+
+  .comp-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--signal-blue);
+    text-align: right;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 110px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.5s forwards;
+  }
+
+  .footer .tagline {
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .footer .tagline .all { color: var(--signal-blue); }
+  .footer .tagline .no { color: var(--text-tertiary); opacity: 0.4; }
+
+  .footer .footer-sub {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 48px 20px; }
+    .timeline::before { left: 16px; }
+    .phase { padding-left: 52px; }
+    .phase-dot { left: 6px; }
+    .phase-card { padding: 20px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .comp-row { grid-template-columns: 72px 1fr 44px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="eyebrow">System Architecture &middot; 2025 – 2026</div>
+    <h1>The Evolution of <span>Signal</span></h1>
+    <div class="subtitle">From one mind scanning the horizon to five hundred specialists dissecting every block. Each version fundamentally changed how intelligence is gathered.</div>
+  </div>
+
+  <div class="timeline">
+    <!-- START -->
+    <div class="phase visible">
+      <div class="phase-dot"></div>
+      <div class="phase-meta">
+        <span class="phase-version">Start</span>
+        <span class="phase-date">July 2025</span>
+      </div>
+      <div class="phase-title">The Generalist</div>
+      <div class="phase-model">Powered by <span>Claude Opus 2.x</span></div>
+      <div class="phase-card">
+        <div class="network-viz" id="viz-start"></div>
+        <div class="stats-grid">
+          <div class="stat"><div class="stat-value">1</div><div class="stat-label">Agent</div></div>
+          <div class="stat"><div class="stat-value">50</div><div class="stat-label">ZIP Codes</div></div>
+          <div class="stat"><div class="stat-value">1</div><div class="stat-label">Research Pass</div></div>
+          <div class="stat"><div class="stat-value">~2pg</div><div class="stat-label">Per ZIP</div></div>
+        </div>
+        <div class="phase-desc">
+          One agent. One pass. Fifty ZIPs. The generalist scanned everything through a single lens — <strong>broad but shallow</strong>. It could spot surface patterns but couldn't hold the context depth to find the stories hiding underneath. Like sending one investigator to cover an entire metro.
+        </div>
+      </div>
+    </div>
+
+    <!-- V1 -->
+    <div class="phase visible">
+      <div class="phase-dot"></div>
+      <div class="phase-meta">
+        <span class="phase-version">V1</span>
+        <span class="phase-date">Fall 2025</span>
+      </div>
+      <div class="phase-title">The Proximity Network</div>
+      <div class="phase-model">Powered by <span>Claude Opus 3.0</span></div>
+      <div class="phase-card">
+        <div class="network-viz" id="viz-v1"></div>
+        <div class="stats-grid">
+          <div class="stat"><div class="stat-value">~8</div><div class="stat-label">Agents</div></div>
+          <div class="stat"><div class="stat-value">50</div><div class="stat-label">ZIP Codes</div></div>
+          <div class="stat"><div class="stat-value">3–10</div><div class="stat-label">ZIPs / Group</div></div>
+          <div class="stat"><div class="stat-value">~6pg</div><div class="stat-label">Per ZIP</div></div>
+        </div>
+        <div class="phase-desc">
+          Markets grouped by <strong>geographic proximity</strong> — each agent owns a cluster and understands how neighboring ZIPs bleed into each other. Spillover effects, shared infrastructure, corridor dynamics. <strong>Context becomes local.</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- V2 -->
+    <div class="phase visible">
+      <div class="phase-dot"></div>
+      <div class="phase-meta">
+        <span class="phase-version">V2</span>
+        <span class="phase-date">Feb 2026</span>
+      </div>
+      <div class="phase-title">The Specialist Swarm</div>
+      <div class="phase-model">Powered by <span>Claude Opus 4.6</span></div>
+      <div class="phase-card">
+        <div class="network-viz" id="viz-v2"></div>
+        <div class="stats-grid">
+          <div class="stat"><div class="stat-value">500</div><div class="stat-label">Agents</div></div>
+          <div class="stat"><div class="stat-value">50</div><div class="stat-label">ZIP Codes</div></div>
+          <div class="stat"><div class="stat-value">10</div><div class="stat-label">Domains / ZIP</div></div>
+          <div class="stat"><div class="stat-value">~30pg</div><div class="stat-label">Per ZIP</div></div>
+        </div>
+        <div class="phase-desc">
+          Every ZIP gets <strong>10 domain specialists</strong> — demographics, ownership patterns, distress signals, economic drivers, housing stock, institutional activity, regulatory environment, infrastructure, market velocity, and narrative synthesis. Each goes deep. Then <strong>convergence</strong> finds where independent signals align.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison -->
+  <div class="comparison-section" id="comparison">
+    <div class="section-title">Intelligence Multiplier &middot; Start &rarr; V2</div>
+    <div class="comparison-bars">
+      <div class="comp-row">
+        <div class="comp-label">Agents</div>
+        <div class="comp-track">
+          <div class="comp-bar bar-0" data-width="2%"></div>
+          <div class="comp-bar bar-1" data-width="16%" data-delay="200"></div>
+          <div class="comp-bar bar-2" data-width="100%" data-delay="400"></div>
+        </div>
+        <div class="comp-value">500×</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Depth</div>
+        <div class="comp-track">
+          <div class="comp-bar bar-0" data-width="7%"></div>
+          <div class="comp-bar bar-1" data-width="20%" data-delay="200"></div>
+          <div class="comp-bar bar-2" data-width="100%" data-delay="400"></div>
+        </div>
+        <div class="comp-value">15×</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Convergence</div>
+        <div class="comp-track">
+          <div class="comp-bar bar-0" data-width="0%"></div>
+          <div class="comp-bar bar-1" data-width="0%" data-delay="200"></div>
+          <div class="comp-bar bar-2" data-width="100%" data-delay="400"></div>
+        </div>
+        <div class="comp-value">&infin;</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-label">Accuracy</div>
+        <div class="comp-track">
+          <div class="comp-bar bar-0" data-width="25%"></div>
+          <div class="comp-bar bar-1" data-width="55%" data-delay="200"></div>
+          <div class="comp-bar bar-2" data-width="95%" data-delay="400"></div>
+        </div>
+        <div class="comp-value">~4×</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="tagline"><span class="all">All Signal.</span>&nbsp; <span class="no">No Noise.</span></div>
+    <div class="footer-sub">The filtering principle at every layer of the architecture.</div>
+  </div>
+</div>
+
+<script>
+function setupCanvas(id) {
+  const container = document.getElementById(id);
+  const canvas = document.createElement('canvas');
+  container.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  function resize() {
+    const rect = container.getBoundingClientRect();
+    canvas.width = rect.width * dpr; canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px'; canvas.style.height = rect.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize(); window.addEventListener('resize', resize);
+  return { canvas, ctx, w: () => canvas.width / dpr, h: () => canvas.height / dpr };
+}
+
+// Colors for canvas
+const C0 = { r:107, g:112, b:128 }; // phase0 gray
+const C1 = { r:58,  g:118, b:240 }; // signal blue
+const C2 = { r:107, g:162, b:255 }; // bright blue
+
+function rgba(c, a) { return `rgba(${c.r},${c.g},${c.b},${a})`; }
+
+// === START ===
+(function() {
+  const { ctx, w, h } = setupCanvas('viz-start');
+  const zips = Array.from({length: 50}, () => ({
+    x: Math.random(), y: Math.random(), phase: Math.random() * Math.PI * 2
+  }));
+  function draw(t) {
+    const cw = w(), ch = h(); ctx.clearRect(0, 0, cw, ch);
+    const cx = cw / 2, cy = ch / 2;
+    zips.forEach(z => {
+      const zx = 50 + z.x * (cw - 100), zy = 25 + z.y * (ch - 50);
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(zx, zy);
+      ctx.strokeStyle = rgba(C0, 0.05 + 0.03 * Math.sin(t * 0.001 + z.phase));
+      ctx.lineWidth = 0.5; ctx.stroke();
+      const p = 0.5 + 0.5 * Math.sin(t * 0.002 + z.phase);
+      ctx.beginPath(); ctx.arc(zx, zy, 2 + p, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(C0, 0.25 + p * 0.3); ctx.fill();
+    });
+    const ap = 8 + 3 * Math.sin(t * 0.003);
+    ctx.beginPath(); ctx.arc(cx, cy, ap + 14, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(C0, 0.04); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, ap, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(C0, 0.1); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(C0, 0.8); ctx.fill();
+    ctx.font = '600 10px Inter, -apple-system, sans-serif';
+    ctx.fillStyle = rgba(C0, 0.45); ctx.textAlign = 'center';
+    ctx.fillText('1 AGENT \u2192 50 ZIPS', cx, cy + 28);
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+// === V1 ===
+(function() {
+  const { ctx, w, h } = setupCanvas('viz-v1');
+  const gd = [
+    {rx:.13,ry:.3,count:7},{rx:.32,ry:.18,count:5},{rx:.52,ry:.62,count:8},{rx:.32,ry:.78,count:6},
+    {rx:.68,ry:.22,count:6},{rx:.85,ry:.5,count:7},{rx:.13,ry:.72,count:4},{rx:.87,ry:.82,count:7}
+  ];
+  gd.forEach(g => {
+    g.zips = Array.from({length: g.count}, (_, i) => ({
+      angle: (i / g.count) * Math.PI * 2, r: 20 + Math.random() * 25, phase: Math.random() * Math.PI * 2
+    }));
+  });
+  function draw(t) {
+    const cw = w(), ch = h(); ctx.clearRect(0, 0, cw, ch);
+    const groups = gd.map(g => ({...g, x: g.rx * cw, y: g.ry * ch}));
+    for (let i = 0; i < groups.length; i++)
+      for (let j = i + 1; j < groups.length; j++) {
+        const dx = groups[j].x - groups[i].x, dy = groups[j].y - groups[i].y;
+        if (Math.sqrt(dx*dx+dy*dy) < cw * 0.35) {
+          ctx.beginPath(); ctx.moveTo(groups[i].x, groups[i].y); ctx.lineTo(groups[j].x, groups[j].y);
+          ctx.strokeStyle = rgba(C1, 0.04); ctx.lineWidth = 0.5;
+          ctx.setLineDash([4, 6]); ctx.stroke(); ctx.setLineDash([]);
+        }
+      }
+    groups.forEach((g, gi) => {
+      gd[gi].zips.forEach(z => {
+        const zx = g.x + Math.cos(z.angle) * z.r, zy = g.y + Math.sin(z.angle) * z.r;
+        ctx.beginPath(); ctx.moveTo(g.x, g.y); ctx.lineTo(zx, zy);
+        ctx.strokeStyle = rgba(C1, 0.15); ctx.lineWidth = 0.8; ctx.stroke();
+        const p = 0.5 + 0.5 * Math.sin(t * 0.002 + z.phase);
+        ctx.beginPath(); ctx.arc(zx, zy, 2.5 + p, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(C1, 0.25 + p * 0.3); ctx.fill();
+      });
+      const hp = 5 + 2 * Math.sin(t * 0.003 + gi);
+      ctx.beginPath(); ctx.arc(g.x, g.y, hp + 6, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(C1, 0.06); ctx.fill();
+      ctx.beginPath(); ctx.arc(g.x, g.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(C1, 1); ctx.fill();
+    });
+    ctx.font = '600 10px Inter, -apple-system, sans-serif';
+    ctx.fillStyle = rgba(C1, 0.4); ctx.textAlign = 'center';
+    ctx.fillText('~8 AGENTS \u2192 PROXIMITY GROUPS \u2192 50 ZIPS', cw / 2, ch - 10);
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+// === V2 ===
+(function() {
+  const { ctx, w, h } = setupCanvas('viz-v2');
+  const zd = [];
+  for (let r = 0; r < 5; r++)
+    for (let c = 0; c < 10; c++)
+      zd.push({
+        rx: (c + 0.5) / 10, ry: (r + 0.5) / 5,
+        jx: (Math.random() - 0.5) * 0.03, jy: (Math.random() - 0.5) * 0.03,
+        phase: Math.random() * Math.PI * 2,
+        specs: Array.from({length: 10}, (_, s) => ({
+          ba: (s / 10) * Math.PI * 2, rad: 6 + Math.random() * 5,
+          spd: 0.0008 + Math.random() * 0.0012, ph: Math.random() * Math.PI * 2
+        }))
+      });
+  const pkts = Array.from({length: 30}, () => {
+    const a = Math.floor(Math.random() * 50);
+    let b = Math.floor(Math.random() * 50); while (b === a) b = Math.floor(Math.random() * 50);
+    return { from: a, to: b, prog: Math.random(), spd: 0.002 + Math.random() * 0.004 };
+  });
+  function draw(t) {
+    const cw = w(), ch = h(); ctx.clearRect(0, 0, cw, ch);
+    const px = 35, py = 22;
+    const nodes = zd.map(z => ({
+      ...z, x: px + (z.rx + z.jx) * (cw - px * 2), y: py + (z.ry + z.jy) * (ch - py * 2)
+    }));
+    // mesh
+    for (let i = 0; i < nodes.length; i++)
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[j].x - nodes[i].x, dy = nodes[j].y - nodes[i].y;
+        if (Math.sqrt(dx*dx+dy*dy) < cw * 0.16) {
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = rgba(C2, 0.03 + 0.02 * Math.sin(t * 0.001 + i));
+          ctx.lineWidth = 0.3; ctx.stroke();
+        }
+      }
+    // packets
+    pkts.forEach(p => {
+      p.prog += p.spd;
+      if (p.prog > 1) { p.prog = 0; p.from = p.to; p.to = Math.floor(Math.random() * 50); }
+      const f = nodes[p.from], tn = nodes[p.to];
+      ctx.beginPath(); ctx.arc(f.x + (tn.x - f.x) * p.prog, f.y + (tn.y - f.y) * p.prog, 1.2, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(C1, 0.6 * (1 - Math.abs(p.prog - 0.5) * 2)); ctx.fill();
+    });
+    // nodes + specialists
+    nodes.forEach(n => {
+      n.specs.forEach(s => {
+        const sx = n.x + Math.cos(s.ba + t * s.spd) * s.rad;
+        const sy = n.y + Math.sin(s.ba + t * s.spd) * s.rad;
+        ctx.beginPath(); ctx.arc(sx, sy, 1, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(C1, 0.3 * (0.4 + 0.6 * Math.sin(t * 0.003 + s.ph))); ctx.fill();
+      });
+      const p = 0.5 + 0.5 * Math.sin(t * 0.002 + n.phase);
+      ctx.beginPath(); ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(C2, 0.5 + p * 0.3); ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x, n.y, 7 + p * 3, 0, Math.PI * 2);
+      ctx.strokeStyle = rgba(C2, 0.04 + p * 0.03); ctx.lineWidth = 0.5; ctx.stroke();
+    });
+    ctx.font = '600 10px Inter, -apple-system, sans-serif';
+    ctx.fillStyle = rgba(C2, 0.4); ctx.textAlign = 'center';
+    ctx.fillText('500 SPECIALIST AGENTS \u2192 10 DOMAINS \u00d7 50 ZIPS', cw / 2, ch - 8);
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+// Bar animation
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.comp-bar').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.width; }, parseInt(bar.dataset.delay || '0'));
+      });
+      obs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+obs.observe(document.getElementById('comparison'));
+</script>
+</body>
+</html>

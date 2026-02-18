@@ -1,0 +1,13 @@
+Signal is a system that thinks about real estate markets the way the best human investor would if they had unlimited research capacity and zero bias.
+It starts from nothing. No assumptions about what matters, no predetermined scoring columns, no templates inherited from how the last market worked. It reads a market fresh — the way an investigator walks into a new city and starts asking questions, following leads, connecting dots that nobody told them to connect.
+The core insight is that every market has a story, and the story is always different. Jennings has a distress story hiding in $6K listings and landlord abandonment that never shows up in a foreclosure database. New Melle has a stability story that looks like opportunity on the surface but is actually a desert. A Phoenix suburb has an institutional capital story. A Detroit ZIP has a tax reversion story. Signal finds the story that's actually there, not the story a template expects.
+Then it separates signal from noise. Not through rigid formulas but through convergence — when an aging housing stock finding, a probate filing trend, a zero-dollar deed transfer pattern, and a long-tenure ownership profile all independently point the same direction across different research domains, that's signal. When a single data point from one source says something that nothing else corroborates, that's noise. The mosaic approach means Signal gets more confident as evidence converges and more skeptical as it stands alone.
+And critically — it serves the investor's specific business model without being captured by it. The research is honest. If a market is bad for your strategy, Signal tells you that. It doesn't twist findings to justify a deal. It doesn't hide negatives behind optimistic framing. It gives you the full picture and lets you make the call.
+All Signal. No Noise. That's not a tagline. That's the filtering principle at every layer of the architecture.
+
+Can you create a visual of the evolution of sigal over time
+Start: 1 general agentic agent for 50 zips Opus 2. something? July 2025
+v1: 1 general agentic agent per proximity group, 3-10 zips per group, covering 50 zips. Opus 3.0
+v2: 10 domain specialist agent agents per zip, covering 50 zips. opus 4.6
+
+i want the visual to really encapsulate the progression it's made. It's becoming smarter, covering more ground, more accurate, more detailed with each iteration.
