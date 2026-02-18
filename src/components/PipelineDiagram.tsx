@@ -287,19 +287,13 @@ export default function PipelineDiagram() {
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
   return (
-    <div className="h-full w-full">
-      {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-10 bg-gray-950/90 backdrop-blur-sm border-b border-gray-800 px-6 py-3 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-white">Signal V2 — Pipeline Architecture</h1>
-          <p className="text-sm text-gray-400">V4 Agentic Intelligence Pipeline • 18 Nodes • 10 Research Agents</p>
-        </div>
-        <div className="flex gap-4 text-xs">
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-blue-500/60 border border-blue-400"></span> Code Node</span>
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-green-500/60 border border-green-400"></span> Claude API</span>
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-purple-500/60 border border-purple-400"></span> Perplexity API</span>
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-red-500/60 border border-red-400"></span> BLOCKED</span>
-        </div>
+    <div className="h-full w-full relative">
+      {/* Legend */}
+      <div className="absolute top-3 right-3 z-10 flex gap-4 text-xs bg-gray-950/80 backdrop-blur-sm rounded-lg px-4 py-2 border border-gray-800">
+        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-blue-500/60 border border-blue-400"></span> Code Node</span>
+        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-green-500/60 border border-green-400"></span> Claude API</span>
+        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-purple-500/60 border border-purple-400"></span> Perplexity API</span>
+        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-red-500/60 border border-red-400"></span> BLOCKED</span>
       </div>
 
       <ReactFlow
