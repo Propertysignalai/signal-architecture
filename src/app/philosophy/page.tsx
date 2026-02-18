@@ -7,7 +7,7 @@ export default function PhilosophyPage() {
           Design Philosophy
         </h1>
         <p className="mt-3 text-gray-400 text-lg max-w-2xl">
-          How Signal V4 evolved from rigid templates to free-reasoning agents — and why that matters for intelligence quality.
+          How Signal V2 evolved from rigid templates to free-reasoning agents — and why that matters for intelligence quality.
         </p>
       </section>
 
@@ -15,12 +15,10 @@ export default function PhilosophyPage() {
         {/* Evolution Timeline */}
         <section>
           <h2 className="text-2xl font-semibold mb-6 text-white">Evolution Timeline</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { v: 'V1', desc: '5 prescribed agents with rigid output templates', color: 'from-gray-700 to-gray-600', icon: '📋' },
-              { v: 'V2', desc: '5 agents with improved prompts and better context', color: 'from-gray-600 to-gray-500', icon: '📝' },
-              { v: 'V3', desc: '10 specialized agents with structured JSON output', color: 'from-indigo-800 to-indigo-600', icon: '🔧' },
-              { v: 'V4', desc: '10 free-reasoning agents, Layer 0 education, strategy-blind L2 synthesis', color: 'from-purple-700 to-indigo-500', icon: '🧠' },
+              { v: 'V1', desc: '5 prescribed agents with rigid output templates, basic scoring', color: 'from-gray-700 to-gray-600', icon: '📋' },
+              { v: 'V2', desc: '10 free-reasoning agents, Layer 0 strategy education, strategy-blind synthesis, bias protection chain', color: 'from-purple-700 to-indigo-500', icon: '🧠' },
             ].map((item) => (
               <div
                 key={item.v}
@@ -41,7 +39,7 @@ export default function PhilosophyPage() {
           </h2>
           <p className="text-gray-300 leading-relaxed max-w-3xl">
             Structured output schemas told agents <em>what</em> to find — biasing their research toward expected answers.
-            V4 flips this: agents receive <strong>domain education</strong> (mechanics of how their domain works),
+            V2 flips this: agents receive <strong>domain education</strong> (mechanics of how their domain works),
             then reason freely about what they observe. The structured output schema captures their findings without
             constraining their thinking. This produces richer, more surprising intelligence.
           </p>

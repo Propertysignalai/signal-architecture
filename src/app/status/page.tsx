@@ -4,7 +4,7 @@ const sections = [
     label: 'Built',
     color: 'bg-green-500',
     items: [
-      'V4 architecture design',
+      'V2 architecture design',
       '10 agent prompts',
       'Layer 0 prompt (Strategy Orchestrator)',
       'Layer 2 strategy-blind prompt (Intelligence Analyst)',
@@ -17,7 +17,7 @@ const sections = [
     label: 'In Progress',
     color: 'bg-yellow-500',
     items: [
-      'V4 workflow deploy & test',
+      'V2 workflow deploy & test',
       'Vercel deployment',
     ],
   },
@@ -41,7 +41,7 @@ export default function StatusPage() {
           Build Status
         </h1>
         <p className="mt-3 text-gray-400 text-lg max-w-2xl">
-          Current state of the Signal V4 architecture implementation.
+          Current state of the Signal V2 architecture implementation.
         </p>
       </section>
 
