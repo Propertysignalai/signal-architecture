@@ -261,9 +261,9 @@ export default function EvolutionPage() {
       <div className="fixed top-[-250px] left-1/2 -translate-x-1/2 w-[700px] h-[500px] pointer-events-none z-0"
         style={{ background: 'radial-gradient(ellipse, rgba(58,118,240,0.06) 0%, rgba(58,118,240,0.02) 50%, transparent 70%)' }} />
 
-      <div className="relative z-10 max-w-[960px] mx-auto px-10 py-20">
+      <div className="relative z-10 max-w-[960px] mx-auto px-4 md:px-10 py-10 md:py-20">
         {/* Header */}
-        <div className="text-center mb-24 animate-fade-up">
+        <div className="text-center mb-12 md:mb-24 animate-fade-up">
           <div className="text-[13px] font-semibold tracking-wider uppercase text-[#3A76F0] mb-4">
             System Architecture · 2025 – 2026
           </div>
@@ -276,7 +276,7 @@ export default function EvolutionPage() {
         </div>
 
         {/* Vision Quote */}
-        <div className="mb-20 max-w-3xl mx-auto">
+        <div className="mb-10 md:mb-20 max-w-3xl mx-auto">
           <div className="rounded-2xl border border-white/5 p-8" style={{ background: '#1b1c20' }}>
             <p className="text-[15px] leading-relaxed text-[#8b8d97] italic">
               &ldquo;Signal is a system that thinks about real estate markets the way the best human investor would if they had unlimited research capacity and zero bias. It starts from nothing. No assumptions about what matters, no predetermined scoring columns, no templates inherited from how the last market worked. It reads a market fresh — the way an investigator walks into a new city and starts asking questions, following leads, connecting dots that nobody told them to connect.&rdquo;
@@ -287,16 +287,16 @@ export default function EvolutionPage() {
         {/* Timeline */}
         <div className="relative flex flex-col">
           {/* Timeline line */}
-          <div className="absolute left-[24px] top-0 bottom-0 w-[2px] rounded-full opacity-25"
+          <div className="absolute left-[14px] md:left-[24px] top-0 bottom-0 w-[2px] rounded-full opacity-25"
             style={{ background: 'linear-gradient(to bottom, #6b7080, #3A76F0, #6BA2FF)' }} />
 
           {phases.map((phase, i) => {
             const colors = colorMap[phase.colorVar as keyof typeof colorMap];
             return (
-              <div key={phase.version} className="relative pl-[72px] pb-[68px]">
+              <div key={phase.version} className="relative pl-[52px] md:pl-[72px] pb-[48px] md:pb-[68px]">
                 {/* Dot */}
-                <div className={`absolute left-[14px] top-[6px] w-[22px] h-[22px] rounded-full flex items-center justify-center ${colors.dot}`}>
-                  <div className={`w-[10px] h-[10px] rounded-full ${colors.inner}`} />
+                <div className={`absolute left-[6px] md:left-[14px] top-[6px] w-[18px] md:w-[22px] h-[18px] md:h-[22px] rounded-full flex items-center justify-center ${colors.dot}`}>
+                  <div className={`w-[8px] md:w-[10px] h-[8px] md:h-[10px] rounded-full ${colors.inner}`} />
                 </div>
 
                 {/* Meta */}
@@ -317,22 +317,22 @@ export default function EvolutionPage() {
                   <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r ${colors.topLine} to-transparent`} />
 
                   {/* Canvas */}
-                  <div className="h-[200px] mx-6 mt-6 rounded-xl overflow-hidden border border-white/[0.03]" style={{ background: 'rgba(0,0,0,0.3)' }}>
+                  <div className="h-[160px] md:h-[200px] mx-4 md:mx-6 mt-4 md:mt-6 rounded-xl overflow-hidden border border-white/[0.03]" style={{ background: 'rgba(0,0,0,0.3)' }}>
                     <CanvasViz draw={phase.draw} />
                   </div>
 
                   {/* Stats */}
-                  <div className="grid grid-cols-4 gap-2.5 px-6 pt-6 pb-2">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-2.5 px-4 md:px-6 pt-4 md:pt-6 pb-2">
                     {phase.stats.map(s => (
                       <div key={s.label} className="rounded-xl border border-white/[0.03] p-3.5 text-center" style={{ background: '#232428' }}>
-                        <div className="text-[28px] font-bold leading-none mb-1.5 tracking-tight">{s.value}</div>
-                        <div className={`text-[10px] font-semibold uppercase tracking-wider ${colors.label}`}>{s.label}</div>
+                        <div className="text-[22px] md:text-[28px] font-bold leading-none mb-1.5 tracking-tight">{s.value}</div>
+                        <div className={`text-[9px] md:text-[10px] font-semibold uppercase tracking-wider ${colors.label}`}>{s.label}</div>
                       </div>
                     ))}
                   </div>
 
                   {/* Description */}
-                  <p className="text-[14.5px] leading-relaxed text-[#8b8d97] px-6 pb-6 pt-4">
+                  <p className="text-[13px] md:text-[14.5px] leading-relaxed text-[#8b8d97] px-4 md:px-6 pb-4 md:pb-6 pt-3 md:pt-4">
                     {phase.desc}
                   </p>
                 </div>
@@ -348,7 +348,7 @@ export default function EvolutionPage() {
           </div>
           <div className="flex flex-col gap-3.5 max-w-[680px] mx-auto">
             {compRows.map(row => (
-              <div key={row.label} className="grid grid-cols-[100px_1fr_56px] items-center gap-4">
+              <div key={row.label} className="grid grid-cols-[72px_1fr_44px] md:grid-cols-[100px_1fr_56px] items-center gap-2 md:gap-4">
                 <div className="text-[13px] font-medium text-[#8b8d97] text-right">{row.label}</div>
                 <div className="h-[34px] rounded-lg relative overflow-hidden border border-white/[0.03]" style={{ background: '#232428' }}>
                   {row.widths.map((w, j) => (
