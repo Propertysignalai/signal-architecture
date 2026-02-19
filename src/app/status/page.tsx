@@ -3,6 +3,7 @@
 import { useMemo, memo, useCallback } from 'react';
 import { ReactFlow, Background, Controls, MiniMap, Node, Edge, Handle, Position, useNodesState, useEdgesState } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { autoLayout } from '@/utils/autoLayout';
 
 const HubNode = memo(function HubNode() {
   return (
@@ -127,12 +128,19 @@ export default function StatusPage() {
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
   const handleOrganize = useCallback(() => {
-    setNodes(makeStatusNodes());
+    const laid = autoLayout(nodes, edges, {
+      direction: 'TB',
+      nodeWidth: 260,
+      nodeHeight: 100,
+      horizontalSpacing: 80,
+      verticalSpacing: 70,
+    });
+    setNodes(laid);
     setTimeout(() => {
       const fitBtn = document.querySelector('.react-flow__controls-fitview') as HTMLButtonElement;
       fitBtn?.click();
-    }, 50);
-  }, [setNodes]);
+    }, 100);
+  }, [nodes, edges, setNodes]);
 
   return (
     <main className="h-[calc(100vh-3rem)] md:h-[calc(100vh-3.5rem)] w-full bg-gray-950 relative">

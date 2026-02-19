@@ -17,6 +17,7 @@ import '@xyflow/react/dist/style.css';
 import CustomNode from './CustomNode';
 import BlockedNode from './BlockedNode';
 import SectionLabel from './SectionLabel';
+import { autoLayout } from '@/utils/autoLayout';
 
 // Color scheme
 const COLORS = {
@@ -394,12 +395,27 @@ export default function PipelineDiagram() {
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
   const handleOrganize = useCallback(() => {
-    setNodes(makeNodes());
+    // Filter out section labels for layout (they're decorative)
+    const layoutNodes = nodes.filter((n) => n.type !== 'sectionLabel');
+    const laid = autoLayout(layoutNodes, edges, {
+      direction: 'TB',
+      nodeWidth: 240,
+      nodeHeight: 140,
+      horizontalSpacing: 60,
+      verticalSpacing: 80,
+    });
+    // Merge laid-out positions back, keep section labels at original spots
+    const laidMap = new Map(laid.map((n) => [n.id, n.position]));
+    setNodes(
+      nodes.map((n) =>
+        laidMap.has(n.id) ? { ...n, position: laidMap.get(n.id)! } : n
+      )
+    );
     setTimeout(() => {
       const fitBtn = document.querySelector('.react-flow__controls-fitview') as HTMLButtonElement;
       fitBtn?.click();
-    }, 50);
-  }, [setNodes]);
+    }, 100);
+  }, [nodes, edges, setNodes]);
 
   return (
     <div className="h-full w-full relative">
