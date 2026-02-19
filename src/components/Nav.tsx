@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const links = [
-  { href: '/', label: 'Pipeline' },
+  { href: '/', label: 'Map→Mailbox' },
   { href: '/philosophy', label: 'Evolution' },
   { href: '/agents', label: 'Agents' },
   { href: '/bias-protection', label: 'Bias' },
-  { href: '/data-flow', label: 'Data Flow' },
+  { href: '/data-flow', label: 'Pipeline' },
   { href: '/status', label: 'Status' },
 ];
 

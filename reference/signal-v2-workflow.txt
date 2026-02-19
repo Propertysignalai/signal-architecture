@@ -1,0 +1,240 @@
+Signal V2 — Complete Product Workflow
+Map to Mailbox: The Full User Journey
+
+OVERVIEW
+Signal V2 decouples research from scoring. Research happens first on the map — building
+market intelligence that gets stored and visualized. Scoring happens later when a property
+list is pulled. This means intelligence is always fresh, always available, and never wasted.
+MAP → RESEARCH → VISUALIZE → SELECT → PULL DATA → SCORE → BUILD → MAIL
+
+PHASE 1: ZIP SELECTION ON MAP
+What happens: User opens the Signal coverage map and selects target ZIP codes.
+How it works:
+Interactive map with click-to-select ZIPs
+ZIPs highlight as selected (green fill)
+Sidebar shows selected ZIP list with count
+Copy/paste functionality for ZIP lists
+Can select individual ZIPs or draw a region
+No commitment yet — this is exploration mode
+User decides: “These are the areas I want to investigate.”
+Output: Selected ZIP list (e.g., 63136, 63137, 63138, 63033, 63034)
+
+PHASE 2: RESEARCH (Layer 0 → Layer 1 → Layer 2)
+
+What happens: For each selected ZIP, the full V2 research pipeline runs.
+Per ZIP:
+1. Layer 0: Strategy Education — Claude produces a strategy education document based
+on the user’s exit strategy (Fix & Flip, Wholesale, BRRRR, etc.)
+2. Layer 1: 10 Research Agents — Perplexity agents investigate the ZIP across 10
+domains in parallel:
+Physical Environment & Housing Stock
+Financial Positions & Transaction Patterns
+Distress & Legal Activity
+Ownership Structure & Occupancy
+Market Dynamics & Demographic Forces
+Temporal & Seasonal Patterns
+Economic Stress & Leading Indicators
+Investor & Competitive Landscape
+Regulatory & Political Environment
+Neighborhood & Micro-Location Intelligence
+3. Layer 2: Intelligence Enrichment — Claude reads across all 10 agents and adds crossdomain tags, conflict identification, mosaic patterns, proxy validations, propensity to
+sell, and data quality assessment
+Output per ZIP: Complete intelligence package — strategy education + raw agent findings
++ Layer 2 enrichments
+All research data is SAVED for scoring later.
+
+PHASE 3: MAP UPDATE WITH RESEARCH
+What happens: The map updates to reflect what the research actually found. This is where
+the user SEES the intelligence visually.
+Map shows per ZIP:
+Signal strength tier (Strong Signal / Moderate Signal / Weak Signal)
+
+Key findings summary on hover/click
+Propensity to sell indicators
+Mosaic confidence level (how many domains converged)
+Distress indicators
+Market trajectory (growing, stable, declining)
+Agent convergence patterns
+Color coding based on strategy fit
+What the user learns:
+“63136 is a distress-heavy market with high propensity — strong signal for Fix & Flip”
+“63034 looks stable on the surface but has low seller motivation — weak signal”
+“63137 has interesting patterns but thin data — moderate signal, lower confidence”
+The map becomes the decision tool. Not a spreadsheet. Not a report. A visual intelligence
+layer the user can explore, compare, and learn from.
+Research data stays saved — it doesn’t expire. If the user comes back in a week, the
+intelligence is still there.
+
+PHASE 4: FINAL ZIP SELECTIONS FOR MAILING LIST
+What happens: Based on the research-powered map, the user makes their FINAL
+selections — which ZIPs will actually become a mailing campaign.
+User narrows down:
+Started with 15 ZIPs of interest
+Research ran on all 15
+Map showed 8 as strong signal, 4 moderate, 3 weak
+User selects the 8 strong + 2 moderate = 10 ZIPs for mailing
+This is a different selection than Phase 1. Phase 1 was “investigate these.” Phase 4 is
+“mail these.” Research informed the decision.
+Output: Final ZIP list for mailing campaign
+
+PHASE 5: PULL RAW PROPERTY DATA
+What happens: Raw property list data is pulled for the final selected ZIPs. This could
+happen same day as research or weeks later.
+Data sources: PropStream, BatchLeads, ListSource, SMARTData, or any other provider
+Flow:
+1. User pulls property records for final ZIPs from their data provider
+2. Raw CSV uploaded to Signal
+3. List Conversion pipeline normalizes to Signal’s 92-column format (handles any source)
+4. Clean, standardized property list ready for scoring
+Key insight: The property data is FRESH — pulled when the user is ready to mail, not when
+research was conducted. Research tells you WHERE to pull. The pull itself gets current
+records.
+Output: Standardized property list (50,000+ rows) for the selected ZIPs
+
+PHASE 6: APPLY SCORING USING SAVED RESEARCH
+What happens: The saved research intelligence from Phase 2 is now applied to the actual
+property list. This is where Layer 3 and Layer 4 come in.
+Layer 3: Scoring Translation (Claude)
+Sees the saved intelligence package for the first time alongside column definitions
+Maps research findings to scoring column relevance
+Generates 6 JavaScript scoring functions:
+calculateCO(row) → Base Signal Points
+calculateCP(row) → Final Signal Score (100-1500)
+calculateCQ(row) → Noise Filter (0-100)
+calculateCR(row) → Temporal Urgency (HIGH/MEDIUM/LOW)
+calculateCS(row) → Dynamic Offer Amount ($)
+calculateCT(row) → Offer Percentage (0-100%)
+
+Produces combination functions (multi-factor multipliers)
+Applies geographic tier multipliers per ZIP
+Weights confidence based on Layer 2’s data quality assessment
+Layer 4: Execution (Vercel)
+Takes JS functions from Layer 3 + property list CSV
+Executes scoring functions against every row
+Calculates all 6 scores per property
+Sorts by Signal Score descending
+Stores scored results to Base44
+Output: Fully scored property list — every property has a Signal Score, Noise Filter,
+Temporal Urgency, Dynamic Offer Amount, and Offer Percentage
+
+PHASE 7: CAMPAIGN BUILDER
+What happens: User builds their mailing campaign from the scored list using filters and
+thresholds.
+Available filters:
+Signal Score minimum (e.g., only properties scoring 800+)
+Noise Filter threshold (e.g., only high-confidence scores above 60)
+Temporal Urgency (e.g., only HIGH urgency for time-sensitive campaigns)
+Offer range (e.g., only properties where dynamic offer is $50K-$150K)
+Strategy-specific filters (distress type, ownership pattern, etc.)
+Geographic filters (specific ZIPs within the selection)
+Property characteristics (beds, baths, sqft, year built, etc.)
+User controls:
+Total mail count target (e.g., “I want to mail 5,000 properties”)
+Budget constraints (offer amount ranges)
+Campaign type (first touch, follow-up, high-priority)
+
+Exclusions (already contacted, under contract, do not mail)
+Output: Filtered campaign list with property count, total estimated offers, campaign stats
+
+PHASE 8: FINAL MAILING LIST — FILTERED & READY TO GO
+What happens: The campaign list is finalized, exported, and ready for mail house or direct
+mail platform.
+Final output includes per property:
+Full property details (address, owner, beds/baths/sqft, etc.)
+Signal Score
+Noise Filter confidence
+Temporal Urgency flag
+Dynamic Offer Amount
+Offer Percentage
+Key distress indicators that triggered the score
+Export formats:
+CSV for mail house upload
+Direct integration with mailing platforms
+Base44 deal pipeline sync
+The cycle completes: ZIP on a map → researched → scored → filtered → in the mailbox.
+
+WORKFLOW SUMMARY
+Phase
+
+Action
+
+1. ZIP Selection
+
+User selects ZIPs on interactive map
+
+2. Research
+
+Layer 0 → Layer 1 (10 agents) → Layer
+2 per ZIP
+
+Status
+ZIP Selector tab discussed,
+not built
+Built & validated
+
+3. Map Update
+
+Map reflects research findings
+visually
+
+4. Final
+Selection
+
+User narrows ZIPs based on research
+
+V1 map exists, V2
+integration needed
+Depends on Phase 3
+
+List Conversion workflow
+
+5. Pull Data
+
+Raw property list pulled for final ZIPs
+
+6. Scoring
+
+Layer 3 translates + Layer 4 executes
+
+Layer 3 & 4 not built
+
+Filter and build mailing campaign
+
+Basic filtering in Base44
+
+Export ready-to-mail list
+
+Export functionality exists
+
+7. Campaign
+Builder
+8. Final List
+
+exists
+
+KEY INSIGHT: RESEARCH AND SCORING ARE DECOUPLED
+This is the architectural breakthrough of V2. In V1, research and scoring happened in the
+same pipeline run — research a market, immediately generate scoring functions,
+immediately score. If you wanted to score again later, you had to re-research.
+In V2:
+Research is an investment. Run it once, store it, visualize it on the map, reference it
+anytime.
+Scoring is an application. Apply stored research to any property list, anytime, as many
+times as needed.
+The map is the interface. Research isn’t a background process — it’s a visible,
+explorable intelligence layer.
+Time doesn’t matter. Research on Monday, pull data on Thursday, score on Friday. The
+intelligence persists.
+This decoupling means:
+1. Users can research speculatively (investigate 50 ZIPs, only mail 10)
+2. Research costs are front-loaded but reusable
+3. Scoring can be re-run with fresh property data without re-researching
+4. The map accumulates intelligence over time — it gets smarter with every run
+
+THE PHILOSOPHY
+Signal V2 is map-first, research-driven, score-when-ready.
+The map isn’t a visualization of scores. The map IS the product. It’s where the user thinks,
+explores, compares, and decides. Scores are what happens after the decision is made.
+All Signal. No Noise.
+
+
