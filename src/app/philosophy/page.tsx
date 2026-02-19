@@ -192,7 +192,7 @@ const phases = [
     model: 'Claude Opus 2.x', colorVar: 'phase0',
     stats: [
       { value: '1', label: 'Agent' }, { value: '50', label: 'ZIP Codes' },
-      { value: '1', label: 'Research Pass' }, { value: '~2pg', label: 'Per ZIP' },
+      { value: '1', label: 'Research Pass' }, { value: '~25', label: 'Findings / Run' },
     ],
     desc: 'One agent. One pass. Fifty ZIPs. The generalist scanned everything through a single lens — broad but shallow. It could spot surface patterns but couldn\'t hold the context depth to find the stories hiding underneath. Like sending one investigator to cover an entire metro.',
     draw: drawStart,
@@ -202,7 +202,7 @@ const phases = [
     model: 'Claude Opus 3.0', colorVar: 'phase1',
     stats: [
       { value: '3–10', label: 'Agents' }, { value: '50', label: 'ZIP Codes' },
-      { value: '3–10', label: 'ZIPs / Group' }, { value: '~6pg', label: 'Per ZIP' },
+      { value: '3–10', label: 'ZIPs / Group' }, { value: '~200', label: 'Findings / Run' },
     ],
     desc: 'Markets grouped by geographic proximity — each agent owns a cluster and understands how neighboring ZIPs bleed into each other. Spillover effects, shared infrastructure, corridor dynamics. Context becomes local.',
     draw: drawV1,
@@ -212,7 +212,7 @@ const phases = [
     model: 'Claude + Perplexity', colorVar: 'phase2',
     stats: [
       { value: '500', label: '10 × 50 ZIPs' }, { value: '50', label: 'ZIP Codes' },
-      { value: '10', label: 'Domains / ZIP' }, { value: '10–30pg', label: 'Per ZIP' },
+      { value: '10', label: 'Domains / ZIP' }, { value: '3,000+', label: 'Findings / Run' },
     ],
     desc: 'Every ZIP gets 10 domain specialists — housing stock, financial positions, distress & legal, ownership & occupancy, market dynamics, temporal patterns, economic stress, investor landscape, regulatory environment, and micro-location intelligence. Each goes deep. Then convergence finds where independent signals align.',
     draw: drawV2,
