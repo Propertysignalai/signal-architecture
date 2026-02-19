@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, memo } from 'react';
+import { useMemo, memo, useCallback } from 'react';
 import { ReactFlow, Background, Controls, MiniMap, Node, Edge, Handle, Position, useNodesState, useEdgesState } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -89,25 +89,27 @@ const planned = [
   { label: 'Contrasting market test', desc: 'Validate with healthy/growing market ZIPs' },
 ];
 
+function makeStatusNodes(): Node[] {
+  const nodes: Node[] = [
+    { id: 'hub', type: 'hub', position: { x: 400, y: 0 }, data: {} },
+    { id: 'cat-built', type: 'category', position: { x: 30, y: 180 }, data: { label: 'Built', hex: '#22c55e', emoji: '✅', badge: `${built.length} ITEMS`, desc: 'Core pipeline components completed and validated.', count: `${built.length} components delivered` } },
+    { id: 'cat-progress', type: 'category', position: { x: 380, y: 180 }, data: { label: 'In Progress', hex: '#eab308', emoji: '🔧', badge: `${progress.length} ITEMS`, desc: 'Active tuning and testing for production readiness.', count: `${progress.length} items in flight` } },
+    { id: 'cat-planned', type: 'category', position: { x: 720, y: 180 }, data: { label: 'Planned', hex: '#ef4444', emoji: '📋', badge: `${planned.length} ITEMS`, desc: 'Next phase: scoring execution and production deployment.', count: `${planned.length} items queued` } },
+  ];
+  built.forEach((item, i) => {
+    nodes.push({ id: `built-${i}`, type: 'item', position: { x: -60 + (i % 2) * 240, y: 360 + Math.floor(i / 2) * 75 }, data: { label: item.label, desc: item.desc, hex: '#22c55e' } });
+  });
+  progress.forEach((item, i) => {
+    nodes.push({ id: `progress-${i}`, type: 'item', position: { x: 330, y: 360 + i * 75 }, data: { label: item.label, desc: item.desc, hex: '#eab308' } });
+  });
+  planned.forEach((item, i) => {
+    nodes.push({ id: `planned-${i}`, type: 'item', position: { x: 660, y: 360 + i * 75 }, data: { label: item.label, desc: item.desc, hex: '#ef4444' } });
+  });
+  return nodes;
+}
+
 export default function StatusPage() {
-  const initialNodes: Node[] = useMemo(() => {
-    const nodes: Node[] = [
-      { id: 'hub', type: 'hub', position: { x: 400, y: 0 }, data: {} },
-      { id: 'cat-built', type: 'category', position: { x: 30, y: 180 }, data: { label: 'Built', hex: '#22c55e', emoji: '✅', badge: `${built.length} ITEMS`, desc: 'Core pipeline components completed and validated.', count: `${built.length} components delivered` } },
-      { id: 'cat-progress', type: 'category', position: { x: 380, y: 180 }, data: { label: 'In Progress', hex: '#eab308', emoji: '🔧', badge: `${progress.length} ITEMS`, desc: 'Active tuning and testing for production readiness.', count: `${progress.length} items in flight` } },
-      { id: 'cat-planned', type: 'category', position: { x: 720, y: 180 }, data: { label: 'Planned', hex: '#ef4444', emoji: '📋', badge: `${planned.length} ITEMS`, desc: 'Next phase: scoring execution and production deployment.', count: `${planned.length} items queued` } },
-    ];
-    built.forEach((item, i) => {
-      nodes.push({ id: `built-${i}`, type: 'item', position: { x: -60 + (i % 2) * 240, y: 360 + Math.floor(i / 2) * 75 }, data: { label: item.label, desc: item.desc, hex: '#22c55e' } });
-    });
-    progress.forEach((item, i) => {
-      nodes.push({ id: `progress-${i}`, type: 'item', position: { x: 330, y: 360 + i * 75 }, data: { label: item.label, desc: item.desc, hex: '#eab308' } });
-    });
-    planned.forEach((item, i) => {
-      nodes.push({ id: `planned-${i}`, type: 'item', position: { x: 660, y: 360 + i * 75 }, data: { label: item.label, desc: item.desc, hex: '#ef4444' } });
-    });
-    return nodes;
-  }, []);
+  const initialNodes = useMemo(() => makeStatusNodes(), []);
 
   const initialEdges: Edge[] = useMemo(() => {
     const edges: Edge[] = [
@@ -121,11 +123,24 @@ export default function StatusPage() {
     return edges;
   }, []);
 
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
+  const handleOrganize = useCallback(() => {
+    setNodes(makeStatusNodes());
+    setTimeout(() => {
+      const fitBtn = document.querySelector('.react-flow__controls-fitview') as HTMLButtonElement;
+      fitBtn?.click();
+    }, 50);
+  }, [setNodes]);
+
   return (
-    <main className="h-[calc(100vh-3rem)] md:h-[calc(100vh-3.5rem)] w-full bg-gray-950">
+    <main className="h-[calc(100vh-3rem)] md:h-[calc(100vh-3.5rem)] w-full bg-gray-950 relative">
+      <div className="absolute top-3 right-3 z-10">
+        <button onClick={handleOrganize} className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#3A76F0]/20 text-[#3A76F0] text-xs font-bold hover:bg-[#3A76F0]/30 transition-colors border border-[#3A76F0]/30 backdrop-blur-sm">
+          ✨ Organize
+        </button>
+      </div>
       <ReactFlow nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes} fitView fitViewOptions={{ padding: 0.15 }} minZoom={0.15} maxZoom={2} className="bg-gray-950"
         defaultEdgeOptions={{ type: 'smoothstep' }}>

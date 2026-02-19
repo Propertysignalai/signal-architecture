@@ -390,13 +390,25 @@ const nodeTypes = {
 export default function PipelineDiagram() {
   const initialNodes = useMemo(() => makeNodes(), []);
   const initialEdges = useMemo(() => makeEdges(), []);
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
+
+  const handleOrganize = useCallback(() => {
+    setNodes(makeNodes());
+    setTimeout(() => {
+      const fitBtn = document.querySelector('.react-flow__controls-fitview') as HTMLButtonElement;
+      fitBtn?.click();
+    }, 50);
+  }, [setNodes]);
 
   return (
     <div className="h-full w-full relative">
-      {/* Legend */}
+      {/* Legend + Organize */}
       <div className="absolute top-3 right-3 z-10 flex gap-4 text-xs bg-gray-950/80 backdrop-blur-sm rounded-lg px-4 py-2 border border-gray-800">
+        <button onClick={handleOrganize} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#3A76F0]/20 text-[#3A76F0] font-bold hover:bg-[#3A76F0]/30 transition-colors border border-[#3A76F0]/30">
+          ✨ Organize
+        </button>
+        <span className="border-l border-gray-700" />
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-blue-500/60 border border-blue-400"></span> Code Node</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-green-500/60 border border-green-400"></span> Claude API</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-purple-500/60 border border-purple-400"></span> Perplexity API</span>
