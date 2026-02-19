@@ -91,19 +91,19 @@ const planned = [
 
 function makeStatusNodes(): Node[] {
   const nodes: Node[] = [
-    { id: 'hub', type: 'hub', position: { x: 400, y: 0 }, data: {} },
-    { id: 'cat-built', type: 'category', position: { x: 30, y: 180 }, data: { label: 'Built', hex: '#22c55e', emoji: '✅', badge: `${built.length} ITEMS`, desc: 'Core pipeline components completed and validated.', count: `${built.length} components delivered` } },
-    { id: 'cat-progress', type: 'category', position: { x: 380, y: 180 }, data: { label: 'In Progress', hex: '#eab308', emoji: '🔧', badge: `${progress.length} ITEMS`, desc: 'Active tuning and testing for production readiness.', count: `${progress.length} items in flight` } },
-    { id: 'cat-planned', type: 'category', position: { x: 720, y: 180 }, data: { label: 'Planned', hex: '#ef4444', emoji: '📋', badge: `${planned.length} ITEMS`, desc: 'Next phase: scoring execution and production deployment.', count: `${planned.length} items queued` } },
+    { id: 'hub', type: 'hub', position: { x: 500, y: 0 }, data: {} },
+    { id: 'cat-built', type: 'category', position: { x: 0, y: 220 }, data: { label: 'Built', hex: '#22c55e', emoji: '✅', badge: `${built.length} ITEMS`, desc: 'Core pipeline components completed and validated.', count: `${built.length} components delivered` } },
+    { id: 'cat-progress', type: 'category', position: { x: 500, y: 220 }, data: { label: 'In Progress', hex: '#eab308', emoji: '🔧', badge: `${progress.length} ITEMS`, desc: 'Active tuning and testing for production readiness.', count: `${progress.length} items in flight` } },
+    { id: 'cat-planned', type: 'category', position: { x: 920, y: 220 }, data: { label: 'Planned', hex: '#ef4444', emoji: '📋', badge: `${planned.length} ITEMS`, desc: 'Next phase: scoring execution and production deployment.', count: `${planned.length} items queued` } },
   ];
   built.forEach((item, i) => {
-    nodes.push({ id: `built-${i}`, type: 'item', position: { x: -60 + (i % 2) * 240, y: 360 + Math.floor(i / 2) * 75 }, data: { label: item.label, desc: item.desc, hex: '#22c55e' } });
+    nodes.push({ id: `built-${i}`, type: 'item', position: { x: -60, y: 420 + i * 95 }, data: { label: item.label, desc: item.desc, hex: '#22c55e' } });
   });
   progress.forEach((item, i) => {
-    nodes.push({ id: `progress-${i}`, type: 'item', position: { x: 330, y: 360 + i * 75 }, data: { label: item.label, desc: item.desc, hex: '#eab308' } });
+    nodes.push({ id: `progress-${i}`, type: 'item', position: { x: 460, y: 420 + i * 95 }, data: { label: item.label, desc: item.desc, hex: '#eab308' } });
   });
   planned.forEach((item, i) => {
-    nodes.push({ id: `planned-${i}`, type: 'item', position: { x: 660, y: 360 + i * 75 }, data: { label: item.label, desc: item.desc, hex: '#ef4444' } });
+    nodes.push({ id: `planned-${i}`, type: 'item', position: { x: 880, y: 420 + i * 95 }, data: { label: item.label, desc: item.desc, hex: '#ef4444' } });
   });
   return nodes;
 }
