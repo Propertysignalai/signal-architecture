@@ -4,12 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const links = [
-  { href: '/', label: 'Map→Mailbox' },
+  { href: '/', label: 'Pipeline' },
   { href: '/philosophy', label: 'Evolution' },
-  { href: '/agents', label: 'Agents' },
-  { href: '/bias-protection', label: 'Bias' },
-  { href: '/data-flow', label: 'Pipeline' },
-  { href: '/status', label: 'Status' },
+  { href: '/status', label: 'Roadmap' },
 ];
 
 export default function Nav() {

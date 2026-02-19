@@ -49,13 +49,32 @@ const AGENT_SPACING = 220;
 function makeNodes(): Node[] {
   const nodes: Node[] = [];
 
+  // === MAP → MAILBOX TITLE ===
+  nodes.push(
+    { id: 'section-journey', type: 'sectionLabel', position: { x: 150, y: -220 }, data: { label: 'MAP → MAILBOX: FULL JOURNEY' }, draggable: false },
+    { id: 'section-phase1', type: 'sectionLabel', position: { x: 280, y: -160 }, data: { label: 'PHASE 1: USER SELECTION' }, draggable: false },
+  );
+
+  // === PHASE 1: ZIP SELECTION (above pipeline) ===
+  nodes.push({
+    id: 'zip-select',
+    type: 'custom',
+    position: { x: 400, y: -100 },
+    data: {
+      label: '🗺️ ZIP Selection on Map',
+      sublabel: 'USER ACTION — planned',
+      details: ['User selects target ZIPs on coverage map', 'Exploration mode — no commitment yet', '● PLANNED'],
+      nodeType: 'input',
+    },
+  });
+
   // === SECTION LABELS ===
   nodes.push(
-    { id: 'section-input', type: 'sectionLabel', position: { x: 340, y: -20 }, data: { label: 'INPUT' }, draggable: false },
+    { id: 'section-input', type: 'sectionLabel', position: { x: 340, y: -20 }, data: { label: 'PHASE 2: RESEARCH PIPELINE' }, draggable: false },
     { id: 'section-l0', type: 'sectionLabel', position: { x: 280, y: 280 }, data: { label: 'LAYER 0: STRATEGY EDUCATION' }, draggable: false },
     { id: 'section-l1', type: 'sectionLabel', position: { x: 300, y: 560 }, data: { label: 'LAYER 1: RESEARCH AGENTS (Perplexity)' }, draggable: false },
     { id: 'section-l2', type: 'sectionLabel', position: { x: 270, y: 1020 }, data: { label: 'LAYER 2: INTELLIGENCE ENRICHMENT' }, draggable: false },
-    { id: 'section-output', type: 'sectionLabel', position: { x: 340, y: 1400 }, data: { label: 'OUTPUT' }, draggable: false },
+    { id: 'section-output', type: 'sectionLabel', position: { x: 340, y: 1400 }, data: { label: 'RESEARCH OUTPUT' }, draggable: false },
     { id: 'section-blocked', type: 'sectionLabel', position: { x: 1350, y: 280 }, data: { label: 'BIAS PROTECTION CHAIN' }, draggable: false },
   );
 
@@ -179,6 +198,83 @@ function makeNodes(): Node[] {
     },
   });
 
+  // === POST-RESEARCH PHASES ===
+  nodes.push(
+    { id: 'section-post', type: 'sectionLabel', position: { x: 250, y: 1600 }, data: { label: 'POST-RESEARCH PIPELINE' }, draggable: false },
+  );
+
+  nodes.push({
+    id: 'phase3-map-update',
+    type: 'custom',
+    position: { x: 400, y: 1650 },
+    data: {
+      label: '📊 Map Update with Research',
+      sublabel: 'VISUALIZATION — partial',
+      details: ['Map reflects research findings', 'Signal strength tiers, propensity, mosaic confidence', '● PARTIAL'],
+      nodeType: 'code',
+    },
+  });
+
+  nodes.push({
+    id: 'phase4-final-zips',
+    type: 'custom',
+    position: { x: 400, y: 1800 },
+    data: {
+      label: '✅ Final ZIP Selections',
+      sublabel: 'USER DECISION — planned',
+      details: ['User narrows ZIPs based on research', 'Phase 1 was investigate, Phase 4 is mail', '● PLANNED'],
+      nodeType: 'input',
+    },
+  });
+
+  nodes.push({
+    id: 'phase5-pull-data',
+    type: 'custom',
+    position: { x: 400, y: 1950 },
+    data: {
+      label: '📥 Pull Raw Property Data',
+      sublabel: 'DATA IMPORT — built',
+      details: ['Raw CSV from PropStream/BatchLeads', 'List Conversion normalizes to 92-column format', '● BUILT'],
+      nodeType: 'code',
+    },
+  });
+
+  nodes.push({
+    id: 'phase6-scoring',
+    type: 'custom',
+    position: { x: 400, y: 2100 },
+    data: {
+      label: '🧠 Apply Scoring — L3 + L4',
+      sublabel: 'SCORING — planned',
+      details: ['Layer 3 (Claude): Maps intelligence to scoring functions', 'Layer 4 (Vercel): Executes against every row', '● PLANNED'],
+      nodeType: 'claude',
+    },
+  });
+
+  nodes.push({
+    id: 'phase7-campaign',
+    type: 'custom',
+    position: { x: 400, y: 2250 },
+    data: {
+      label: '🎯 Campaign Builder',
+      sublabel: 'USER FILTERS — partial',
+      details: ['Filter by Signal Score, Noise threshold, urgency', 'Set mail count target', '● PARTIAL'],
+      nodeType: 'perplexity',
+    },
+  });
+
+  nodes.push({
+    id: 'phase8-mailing',
+    type: 'custom',
+    position: { x: 400, y: 2400 },
+    data: {
+      label: '📬 Final Mailing List',
+      sublabel: 'EXPORT — exists',
+      details: ['Export CSV for mail house', 'Signal Score, Noise Filter, Urgency, Dynamic Offer', '● EXISTS'],
+      nodeType: 'code',
+    },
+  });
+
   // === BLOCKED CARDS (Bias Protection) ===
   nodes.push({
     id: 'blocked-l0',
@@ -258,6 +354,17 @@ function makeEdges(): Edge[] {
   edges.push({ id: 'e-merge-buildl2', source: 'merge', target: 'build-l2', ...defaultEdge });
   edges.push({ id: 'e-buildl2-layer2', source: 'build-l2', target: 'layer2', ...defaultEdge });
   edges.push({ id: 'e-layer2-parse', source: 'layer2', target: 'parse', ...defaultEdge, style: { stroke: '#22c55e', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#22c55e' } });
+
+  // Phase 1 → webhook
+  edges.push({ id: 'e-zip-webhook', source: 'zip-select', target: 'webhook', ...defaultEdge });
+
+  // Post-research pipeline edges
+  edges.push({ id: 'e-parse-phase3', source: 'parse', target: 'phase3-map-update', ...defaultEdge, style: { stroke: '#eab308', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#eab308' } });
+  edges.push({ id: 'e-phase3-phase4', source: 'phase3-map-update', target: 'phase4-final-zips', ...defaultEdge, style: { stroke: '#8b5cf6', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#8b5cf6' } });
+  edges.push({ id: 'e-phase4-phase5', source: 'phase4-final-zips', target: 'phase5-pull-data', ...defaultEdge, style: { stroke: '#06b6d4', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#06b6d4' } });
+  edges.push({ id: 'e-phase5-phase6', source: 'phase5-pull-data', target: 'phase6-scoring', ...defaultEdge, style: { stroke: '#ef4444', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#ef4444' } });
+  edges.push({ id: 'e-phase6-phase7', source: 'phase6-scoring', target: 'phase7-campaign', ...defaultEdge, style: { stroke: '#f97316', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#f97316' } });
+  edges.push({ id: 'e-phase7-phase8', source: 'phase7-campaign', target: 'phase8-mailing', ...defaultEdge, style: { stroke: '#ec4899', strokeWidth: 2 }, markerEnd: { type: MarkerType.ArrowClosed, color: '#ec4899' } });
 
   // Blocked connections (dashed red)
   const blockedEdge = {

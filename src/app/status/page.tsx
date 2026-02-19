@@ -11,7 +11,7 @@ const HubNode = memo(function HubNode() {
       <Handle type="target" position={Position.Top} className="!bg-gray-500 !border-gray-400 !w-2 !h-2" />
       <div className="text-3xl mb-1">⚡</div>
       <div className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-md inline-block mb-2" style={{ backgroundColor: '#3A76F020', color: '#3A76F0' }}>
-        BUILD STATUS
+        ROADMAP
       </div>
       <div className="text-lg font-bold text-white mb-1">Signal V2</div>
       <div className="text-[11px] text-gray-400 leading-relaxed mb-2">Map-to-Mailbox pipeline with 4-layer bias protection, 10 research agents, and intelligent scoring.</div>
