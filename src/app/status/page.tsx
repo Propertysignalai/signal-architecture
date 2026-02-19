@@ -56,7 +56,7 @@ const ItemNode = memo(function ItemNode({ data }: { data: Record<string, unknown
         <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: hex }} />
         {data.label as string}
       </div>
-      {data.desc && <div className="text-[11px] text-gray-400 leading-relaxed mt-1">{data.desc as string}</div>}
+      {Boolean(data.desc) && <div className="text-[11px] text-gray-400 leading-relaxed mt-1">{String(data.desc)}</div>}
       <Handle type="source" position={Position.Bottom} className="!bg-gray-500 !border-gray-400 !w-2 !h-2" />
     </div>
   );
