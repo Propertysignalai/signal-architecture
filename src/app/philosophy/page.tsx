@@ -144,7 +144,7 @@ function drawV1(ctx: CanvasRenderingContext2D, cw: number, ch: number, t: number
   });
   ctx.font = '600 10px Inter, -apple-system, sans-serif';
   ctx.fillStyle = rgba(C1, 0.4); ctx.textAlign = 'center';
-  ctx.fillText('~8 AGENTS → PROXIMITY GROUPS → 50 ZIPS', cw / 2, ch - 10);
+  ctx.fillText('3–10 AGENTS → PROXIMITY GROUPS → 50 ZIPS', cw / 2, ch - 10);
 }
 
 function drawV2(ctx: CanvasRenderingContext2D, cw: number, ch: number, t: number) {
@@ -201,7 +201,7 @@ const phases = [
     version: 'V1', date: 'Fall 2025', title: 'The Proximity Network',
     model: 'Claude Opus 3.0', colorVar: 'phase1',
     stats: [
-      { value: '~8', label: 'Agents' }, { value: '50', label: 'ZIP Codes' },
+      { value: '3–10', label: 'Agents' }, { value: '50', label: 'ZIP Codes' },
       { value: '3–10', label: 'ZIPs / Group' }, { value: '~6pg', label: 'Per ZIP' },
     ],
     desc: 'Markets grouped by geographic proximity — each agent owns a cluster and understands how neighboring ZIPs bleed into each other. Spillover effects, shared infrastructure, corridor dynamics. Context becomes local.',
@@ -209,12 +209,12 @@ const phases = [
   },
   {
     version: 'V2', date: 'Feb 2026', title: 'The Specialist Swarm',
-    model: 'Claude Opus 4.6', colorVar: 'phase2',
+    model: 'Claude + Perplexity', colorVar: 'phase2',
     stats: [
-      { value: '500', label: 'Agents' }, { value: '50', label: 'ZIP Codes' },
-      { value: '10', label: 'Domains / ZIP' }, { value: '~30pg', label: 'Per ZIP' },
+      { value: '500', label: '10 × 50 ZIPs' }, { value: '50', label: 'ZIP Codes' },
+      { value: '10', label: 'Domains / ZIP' }, { value: '10–30pg', label: 'Per ZIP' },
     ],
-    desc: 'Every ZIP gets 10 domain specialists — demographics, ownership patterns, distress signals, economic drivers, housing stock, institutional activity, regulatory environment, infrastructure, market velocity, and narrative synthesis. Each goes deep. Then convergence finds where independent signals align.',
+    desc: 'Every ZIP gets 10 domain specialists — housing stock, financial positions, distress & legal, ownership & occupancy, market dynamics, temporal patterns, economic stress, investor landscape, regulatory environment, and micro-location intelligence. Each goes deep. Then convergence finds where independent signals align.',
     draw: drawV2,
   },
 ];
@@ -378,7 +378,7 @@ export default function EvolutionPage() {
             <span className="text-[#3A76F0]">All Signal.</span>{' '}
             <span className="text-[#62646e] opacity-40">No Noise.</span>
           </div>
-          <p className="text-[13px] text-[#62646e] mt-2">The filtering principle at every layer of the architecture.</p>
+          <p className="text-[13px] text-[#62646e] mt-2"></p>
         </div>
       </div>
     </main>

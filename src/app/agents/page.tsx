@@ -5,16 +5,16 @@ import { ReactFlow, Background, Controls, MiniMap, Node, Edge, Handle, Position,
 import '@xyflow/react/dist/style.css';
 
 const agents = [
-  { id: 1, emoji: '🏠', name: 'Property &\nHousing Stock', q: 'Age, condition, vacancy,\nhousing type distribution' },
-  { id: 2, emoji: '💰', name: 'Financial &\nEquity', q: 'Mortgage stress, equity\npositions, assessment ratios' },
-  { id: 3, emoji: '⚖️', name: 'Distress &\nLegal', q: 'Foreclosures, tax liens,\ncode violations, legal filings' },
-  { id: 4, emoji: '👥', name: 'Ownership &\nOccupancy', q: 'Tenure, investor ratio,\nturnover, entity ownership' },
-  { id: 5, emoji: '📊', name: 'Market\nDynamics', q: 'Price trends, DOM,\nabsorption rate, listings' },
-  { id: 6, emoji: '📅', name: 'Temporal &\nSeasonal', q: 'Cyclical patterns,\nseasonal trends, timing' },
-  { id: 7, emoji: '💼', name: 'Economic\nStress', q: 'Employment, income,\nbusiness closures' },
-  { id: 8, emoji: '🏢', name: 'Investor &\nCompetitive', q: 'Institutional activity,\nflip volume, rental comp' },
-  { id: 9, emoji: '📜', name: 'Regulatory &\nPolitical', q: 'Zoning, tax policy,\ncode enforcement' },
-  { id: 10, emoji: '📍', name: 'Neighborhood &\nMicrolocation', q: 'Schools, crime, transit,\nwalkability, infrastructure' },
+  { id: 1, emoji: '🏠', name: 'Physical Environment\n& Housing Stock', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 2, emoji: '💰', name: 'Financial Positions\n& Transactions', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 3, emoji: '⚖️', name: 'Distress &\nLegal Activity', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 4, emoji: '👥', name: 'Ownership Structure\n& Occupancy', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 5, emoji: '📊', name: 'Market Dynamics &\nDemographic Forces', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 6, emoji: '📅', name: 'Temporal &\nSeasonal Patterns', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 7, emoji: '💼', name: 'Economic Stress &\nLeading Indicators', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 8, emoji: '🏢', name: 'Investor &\nCompetitive Landscape', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 9, emoji: '📜', name: 'Regulatory &\nPolitical Environment', q: 'Representative focus areas —\nactual findings vary by market' },
+  { id: 10, emoji: '📍', name: 'Neighborhood &\nMicro-Location Intel', q: 'Representative focus areas —\nactual findings vary by market' },
 ];
 
 const AgentNode = memo(function AgentNode({ data }: { data: Record<string, unknown> }) {
@@ -38,7 +38,8 @@ const CenterNode = memo(function CenterNode() {
       <Handle type="target" position={Position.Top} className="!bg-purple-500 !border-purple-400 !w-2 !h-2" />
       <div className="text-3xl mb-2">🔬</div>
       <div className="text-lg font-bold text-white mb-1">10 Domain Specialists</div>
-      <div className="text-[10px] text-purple-300/60 uppercase tracking-wider">Each ZIP gets 10 expert investigators</div>
+      <div className="text-[10px] text-purple-300/60 uppercase tracking-wider mb-2">Each ZIP gets 10 expert investigators</div>
+      <div className="text-[9px] text-purple-300/40 max-w-[260px] leading-relaxed normal-case">Each agent receives strategy education and determines independently what matters. No prescribed fields. The agent decides what to research and how deep to go.</div>
       <Handle type="source" position={Position.Bottom} className="!bg-purple-500 !border-purple-400 !w-2 !h-2" />
     </div>
   );

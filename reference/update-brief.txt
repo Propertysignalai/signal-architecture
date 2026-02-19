@@ -1,0 +1,137 @@
+Signal Architecture Dashboard — Update Brief for Sig
+February 18, 2026
+
+Versioning (Keep It Simple)
+Origin — 1 agent, 1 pass, Signal was born. The generalist. V1 — In production today. Geoproximity framework, grouped ZIPs, multiple agents per group. Investors use this. V2 —
+What we’re building now. 10 domain specialists per ZIP, Layer 0 strategy education, Layer 2
+intelligence enrichment, bias protection chain.
+No other version numbers. No v3, v4, iteration labels anywhere on the site.
+
+Page-by-Page Updates
+1. Homepage (Map to Mailbox)
+Phase 2 description — update:
+Per ZIP: Layer 0 strategy education → 10 parallel research agents → Layer 2 intelligence
+enrichment. Outputs include propensity to sell, mosaic patterns, conflict flags, and data
+quality assessment. All data SAVED.
+Phase 6 description — update:
+Layer 3 (Claude): First layer to see both research AND scoring columns. Maps
+intelligence to JS scoring functions. Layer 4 (Vercel): Executes against every row.
+“Key Insight” section — Consider making “Research and scoring are decoupled” a firstclass visual element, not a footnote. It’s the single most important concept in the product.
+
+2. Evolution Page
+Bottom tagline — change:
+OLD: “The filtering principle at every layer of the architecture.”
+
+NEW: Remove this line entirely. Just keep “All Signal. No Noise.” The word “filtering”
+contradicts the enrichment architecture.
+V2 domain list — fix: The 10th domain is listed as “narrative synthesis.” It should be “microlocation intelligence.” The actual 10 domains:
+1. Physical Environment & Housing Stock
+2. Financial Positions & Transaction Patterns
+3. Distress & Legal Activity
+4. Ownership Structure & Occupancy
+5. Market Dynamics & Demographic Forces
+6. Temporal & Seasonal Patterns
+7. Economic Stress & Leading Indicators
+8. Investor & Competitive Landscape
+9. Regulatory & Political Environment
+10. Neighborhood & Micro-Location Intelligence
+V2 agent count clarification:
+Current: “500 Agents”
+Suggestion: Keep 500 but add context: “10 specialists × 50 ZIPs” so it doesn’t read like
+500 distinct agents
+V2 depth stat:
+Current: “~30pg Per ZIP”
+Update to: “10–30pg Per ZIP” (varies by market data availability)
+Model attributions:
+V2 uses Claude for Layer 0 and Layer 2, but Perplexity for the 10 research agents
+Consider noting this or just saying “Powered by Claude + Perplexity” for V2
+V1 agent count:
+Current: “~8 Agents”
+More accurate: “3–10 Agents” (varied by geo group size)
+
+3. Agents Page
+Add a line above or below the agent grid explaining the philosophy:
+“Each agent receives strategy education and determines independently what matters
+within their domain. No prescribed fields. No form-filling. The agent decides what to
+research, how deep to go, and what’s positive or negative for the investor’s strategy.”
+Agent descriptions — current descriptions list expected data types like a schema (e.g.,
+“Age, condition, vacancy”). These are fine as shorthand but slightly misleading since agents
+find what exists in each market, which may differ from what’s listed. Optional: add a small
+note like “Representative focus areas — actual findings vary by market.”
+
+4. Bias Protection Page — Best Page, One Fix
+Layer 2 card needs updating:
+Title change:
+OLD: “Intelligence Analyst” / “Strategy-blind synthesis & dedup”
+NEW: “Intelligence Enrichment” / “Strategy-blind enrichment & pattern recognition”
+KNOWS section — replace:
+OLD: “Dedup logic”
+NEW: List should include: enrichment tagging, cross-agent confirmation, conflict
+detection, mosaic pattern recognition, proxy validation, propensity to sell assessment,
+data quality scoring
+The key concept: Layer 2 doesn’t condense or filter agent findings. Raw findings pass
+through the pipeline intact. Layer 2 ADDS intelligence on top — tags, patterns, validations,
+propensity. Information is gained, never lost.
+Everything else on this page is accurate. The KNOWS / UNKNOWN / BLOCKED matrix is
+excellent.
+
+5. Data Flow (Pipeline) Page
+L2 node output description — update:
+OLD: “deduped intel, conflicts, mosaic, propensity”
+NEW: “enrichment tags, conflicts, mosaic patterns, proxy validations, propensity, data
+
+quality”
+Parse & Format Output node — update description:
+OLD: “IN: L2 analysis JSON / OUT: final intelligence package”
+NEW: “IN: raw agent findings (from Merge) + L2 enrichments / OUT: combined
+intelligence package”
+This matters because the Parse node is the assembly point — it combines the raw agent
+findings that passed through the code pipeline with Layer 2’s enrichment additions.
+
+6. Status Page
+Move to “Built” (these are done):
+V2 workflow deploy & test
+Full pipeline testing
+
+(all 10 agents validated, QA report generated)
+
+Add to “Planned”:
+No-strategy mode (propensity-only for multi-strategy clients)
+Contrasting market test (healthy/growing market validation)
+Rerun consistency testing
+Agent prompt tuning (Agents 5, 8, 10)
+Multi-ZIP batch orchestration
+
+Global Find-and-Replace
+Across all pages, watch for and update these terms:
+OLD
+
+NEW
+
+filtering / dedup / synthesis (when describing
+
+enrichment / pattern recognition /
+
+Layer 2)
+
+validation
+
+v3, v4, iteration numbers within V2
+
+Remove — just “V2 architecture”
+
+“Strategy-blind synthesis”
+
+“Strategy-blind enrichment”
+
+“deduped intel”
+
+“enrichment tags”
+
+Summary
+The dashboard structure is strong. These are content updates, not redesigns. The biggest
+theme is replacing “filtering/dedup/synthesis” language with “enrichment” language
+throughout — Layer 2 adds intelligence on top of agent findings, it never removes or
+condenses them. And keep versioning clean: Origin → V1 (production) → V2 (building now).
+
+

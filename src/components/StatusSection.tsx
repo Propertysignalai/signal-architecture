@@ -7,7 +7,7 @@ const sections = [
       'V2 architecture design',
       '10 agent prompts (domain specialists)',
       'Layer 0 Strategy Orchestrator prompt',
-      'Layer 2 strategy-blind synthesis prompt',
+      'Layer 2 strategy-blind enrichment prompt',
       'n8n workflow (18 nodes, 10 parallel agents)',
       'Architecture dashboard + evolution page',
     ],

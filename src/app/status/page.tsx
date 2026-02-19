@@ -47,9 +47,9 @@ const ItemNode = memo(function ItemNode({ data }: { data: Record<string, unknown
 
 const nodeTypes = { hub: HubNode, category: CategoryNode, item: ItemNode };
 
-const built = ['V2 architecture design', '10 agent prompts', 'Layer 0 prompt', 'Layer 2 prompt', 'n8n workflow (18 nodes)', 'Architecture dashboard', 'Evolution page'];
-const progress = ['V2 workflow deploy & test', 'Full pipeline testing'];
-const planned = ['Layer 3 column mapping', 'Base44 entities', 'Production webhook', '50-ZIP batch processing'];
+const built = ['V2 architecture design', '10 agent prompts', 'Layer 0 prompt', 'Layer 2 prompt', 'n8n workflow (18 nodes)', 'Architecture dashboard', 'Evolution page', 'V2 workflow deploy & test', 'Full pipeline testing (10 agents validated)'];
+const progress = ['Agent prompt tuning (Agents 5, 8, 10)', 'Rerun consistency testing'];
+const planned = ['Layer 3 column mapping', 'Layer 4 execution (Vercel)', 'Base44 entities', 'Production webhook', 'Multi-ZIP batch orchestration', 'No-strategy mode (propensity-only)', 'Contrasting market test (healthy/growing)'];
 
 export default function StatusPage() {
   const initialNodes: Node[] = useMemo(() => {

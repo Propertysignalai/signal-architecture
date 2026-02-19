@@ -11,7 +11,7 @@ const phases = [
     output: 'Selected ZIP list' },
   { id: 'p2', num: '2', label: 'Research\nPipeline', icon: '🔬', hex: '#22c55e',
     sublabel: 'L0 → L1 → L2', status: 'built',
-    desc: 'Per ZIP: Layer 0 strategy education → 10 parallel research agents → Layer 2 intelligence enrichment. All data SAVED.',
+    desc: 'Per ZIP: Layer 0 strategy education → 10 parallel research agents → Layer 2 intelligence enrichment. Outputs include propensity to sell, mosaic patterns, conflict flags, and data quality assessment. All data SAVED.',
     output: 'Intelligence package per ZIP' },
   { id: 'p3', num: '3', label: 'Map Update\nwith Research', icon: '📊', hex: '#eab308',
     sublabel: 'VISUALIZATION', status: 'partial',
@@ -27,7 +27,7 @@ const phases = [
     output: 'Standardized property list (50K+ rows)' },
   { id: 'p6', num: '6', label: 'Apply Scoring', icon: '🧠', hex: '#ef4444',
     sublabel: 'LAYER 3 + LAYER 4', status: 'planned',
-    desc: 'Layer 3 (Claude): Maps research to 6 JS scoring functions. Layer 4 (Vercel): Executes against every row.',
+    desc: 'Layer 3 (Claude): First layer to see both research AND scoring columns. Maps intelligence to JS scoring functions. Layer 4 (Vercel): Executes against every row.',
     output: 'Signal Score, Noise Filter, Urgency, Offer $' },
   { id: 'p7', num: '7', label: 'Campaign\nBuilder', icon: '🎯', hex: '#f97316',
     sublabel: 'USER FILTERS', status: 'partial',
@@ -88,10 +88,10 @@ const TitleNode = memo(function TitleNode() {
 
 const InsightNode = memo(function InsightNode() {
   return (
-    <div className="relative px-5 py-4 rounded-xl border border-dashed border-[#3A76F0]/40 bg-[#3A76F0]/08 max-w-[360px] shadow-lg shadow-[#3A76F0]/10">
+    <div className="relative px-5 py-4 rounded-xl border-2 border-dashed border-[#3A76F0]/60 bg-[#3A76F0]/08 max-w-[380px] shadow-xl shadow-[#3A76F0]/20">
       <Handle type="target" position={Position.Top} className="!bg-blue-500 !border-blue-400 !w-2 !h-2" />
-      <div className="text-[10px] font-bold text-[#3A76F0] tracking-wider uppercase mb-2">💡 Key Insight</div>
-      <div className="text-[11px] text-gray-400 leading-relaxed">
+      <div className="text-[11px] font-bold text-[#3A76F0] tracking-wider uppercase mb-2">⚡ CORE ARCHITECTURE PRINCIPLE</div>
+      <div className="text-[12px] text-gray-400 leading-relaxed">
         Research and scoring are <span className="text-white font-semibold">decoupled</span>. Research on Monday, pull data on Thursday, score on Friday. Intelligence persists. The map accumulates intelligence over time — it gets smarter with every run.
       </div>
     </div>

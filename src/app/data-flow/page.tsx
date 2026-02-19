@@ -72,8 +72,8 @@ const stages = [
   { id: 'build-agents', y: 520, icon: '⚙️', type_label: 'CODE NODE', label: 'Build Agent Prompts', nodeType: 'code', dataIn: 'zip_code, education_context', dataOut: '10 agent prompt objects' },
   { id: 'merge', y: 800, icon: '🔀', type_label: 'MERGE NODE', label: 'Merge Agent Results', nodeType: 'merge', dataIn: '10 agent outputs', dataOut: 'combined intelligence array' },
   { id: 'build-l2', y: 930, icon: '⚙️', type_label: 'CODE NODE', label: 'Build L2 Prompt', nodeType: 'code', dataIn: 'merged findings', dataOut: 'Layer 2 analysis prompt' },
-  { id: 'l2', y: 1060, icon: '🧠', type_label: 'CLAUDE API', label: 'L2 Intelligence Synthesis', nodeType: 'claude', dataIn: 'L2 prompt + all findings', dataOut: 'deduped intel, conflicts, mosaic, propensity' },
-  { id: 'output', y: 1190, icon: '📤', type_label: 'OUTPUT', label: 'Parse & Format Output', nodeType: 'output', dataIn: 'L2 analysis JSON', dataOut: 'final intelligence package' },
+  { id: 'l2', y: 1060, icon: '🧠', type_label: 'CLAUDE API', label: 'L2 Intelligence Enrichment', nodeType: 'claude', dataIn: 'L2 prompt + all findings', dataOut: 'enrichment tags, conflicts, mosaic patterns, proxy validations, propensity, data quality' },
+  { id: 'output', y: 1190, icon: '📤', type_label: 'OUTPUT', label: 'Parse & Format Output', nodeType: 'output', dataIn: 'raw agent findings (from Merge) + L2 enrichments', dataOut: 'combined intelligence package' },
 ];
 
 export default function DataFlowPage() {
